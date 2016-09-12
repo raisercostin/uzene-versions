@@ -11,12 +11,6 @@ A small class to get information about the jar/artifact containing a java class.
 
 ## Features
 Reads meta information about the code using various methods. The final result is a Map<String,String> with all the info it can gather.
- 
-See the following links to get some feeling of various methods to get this info.
-- https://github.com/jcabi/jcabi-manifests
-- http://www.yegor256.com/2014/07/03/how-to-read-manifest-mf.html
-- https://blog.oio.de/2011/12/09/accessing-maven-properties-from-your-code/
-- http://www.mojohaus.org/properties-maven-plugin/usage.html
 
 ## How to use it
 See the [uzene-versions-sample](uzene-versions-sample) to see how you can configure this class in your project.
@@ -52,3 +46,16 @@ AppInfo info:
    build-timestamp=2016-09-12T21-06-47-154-Z+0000
    build-version=1.0-SNAPSHOT-2016-09-12T21-06-47-154-Z+0000-#no-scm-configured
 ```
+
+## Other solutions
+See the following links to get some feeling of various methods to get this info.
+- https://github.com/jcabi/jcabi-manifests
+- http://www.yegor256.com/2014/07/03/how-to-read-manifest-mf.html
+- https://blog.oio.de/2011/12/09/accessing-maven-properties-from-your-code/
+- http://www.mojohaus.org/properties-maven-plugin/usage.html
+
+## Development
+### How to build and release
+
+	mvn release:prepare release:perform -DskipTests=true -Prelease -Darguments="-DskipTests=true -Prelease"
+
