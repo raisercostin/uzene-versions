@@ -50,6 +50,7 @@ Notice the Implementation-URL and buildNumber=[f881d954ec33e13033acd12a4e0442a2a
 See the [uzene-versions-sample](uzene-versions-sample) to see how you can configure this class in your project.
 
 Add dependency on AppInfo class. The lib is hosted in JCenter
+
 	```
 		<dependency>
 			<groupId>org.uzene</groupId>
