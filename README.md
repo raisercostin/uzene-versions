@@ -51,11 +51,11 @@ See the [uzene-versions-sample](uzene-versions-sample) to see how you can config
 
 Add dependency on AppInfo class. The lib is hosted in JCenter
 
-		<dependency>
-			<groupId>org.uzene</groupId>
-			<artifactId>uzene-versions</artifactId>
-			<version>1.0</version>
-		</dependency>
+	<dependency>
+		<groupId>org.uzene</groupId>
+		<artifactId>uzene-versions</artifactId>
+		<version>1.0</version>
+	</dependency>
 
 Configure inyour pom.xml
 - ```properties-maven-plugin``` and <properties> to add to artifact the properties ```${project.build.outputDirectory}/META-INF/maven/${groupId}/${artifactId}/pom-build.properties```.
