@@ -13,7 +13,7 @@ A small class to get information about the jar/artifact containing a java class.
 Reads meta information about the code using various methods. The final result is a Map<String,String> with all the info it can gather.
 
 ## How to use it
-See the [uzene-versions-sample](uzene-versions-sample) to see how you can configure this class in your project.
+See the [uzene-versions-sample](../../uzene-versions-sample) to see how you can configure this class in your project.
 
 You can get the info via ```AppInfo.readMetaInfo(aClass, optionalGroupId, optionalArtifactId)```
 The output from sample app:
@@ -46,7 +46,7 @@ AppInfo info:
    build-timestamp=2016-09-12T21-54-32-436-Z+0000
    build-version=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
 ```
-Notice the Implementation-URL and buildNumber=[f881d954ec33e13033acd12a4e0442a2abaaf2d9](commit/f881d954ec33e13033acd12a4e0442a2abaaf2d9).
+Notice the Implementation-URL and buildNumber=[f881d954ec33e13033acd12a4e0442a2abaaf2d9](../../commit/f881d954ec33e13033acd12a4e0442a2abaaf2d9).
 
 ## How it works
 Information about a class is searched in various locations relative to that class. For now only the information from first existing resource is used.
