@@ -46,6 +46,71 @@ AppInfo info:
    build-timestamp=2016-09-12T21-54-32-436-Z+0000
    build-version=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
 ```
+Notice the Implementation-URL and buildNumber=[f881d954ec33e13033acd12a4e0442a2abaaf2d9](commit/f881d954ec33e13033acd12a4e0442a2abaaf2d9).
+
+## How it works
+Information about a class is searched in various locations relative to that class. For now only the information from first existing resource is used.
+The locations used are:
+- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom-build.properties		- uzene-versions convention
+- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom.properties   - maven convention
+- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom.xml   - maven convention, for now cannot extract info from here
+- <classContainerOrFolder>/META-INF/MANIFEST.MF   - sun convention used in jars, wars and other packages
+- <classContainerOrFolder>/WEB-INF/MANIFEST.MF   - servlet convention used for wars
+- <classContainerOrFolder>/pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+- <classContainerOrFolder>/../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+- <classContainerOrFolder>/../../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+
+Full output clarifies also the sources of information.
+```
+23:59:24.068 [main] INFO  org.uzene.util.AppInfo - searching information for class org.uzene.versions.VersionedAppMain defined in groupId=[org.raisercostin] artifactId=[uzene-versions-sample]
+23:59:24.189 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/META-INF/maven/org.raisercostin/uzene-versions-sample/pom-build.properties ...
+23:59:24.189 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/META-INF/maven/org.raisercostin/uzene-versions-sample/pom-build.properties ... found stream class java.io.BufferedInputStream
+23:59:24.192 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/META-INF/maven/org.raisercostin/uzene-versions-sample/pom.properties ...
+23:59:24.192 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/META-INF/maven/org.raisercostin/uzene-versions-sample/pom.xml ...
+23:59:24.192 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/META-INF/MANIFEST.MF ...
+23:59:24.193 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/WEB-INF/MANIFEST.MF ...
+23:59:24.193 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/pom.xml ...
+23:59:24.193 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/../pom.xml ...
+23:59:24.193 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/../../pom.xml ...
+23:59:24.193 [main] INFO  org.uzene.util.AppInfo - analysing file:/Users/raiser/work/uzene-versions/uzene-versions-sample/target/classes/../../pom.xml ... found stream class java.io.BufferedInputStream
+23:59:24.193 [main] DEBUG org.uzene.util.AppInfo - In the future pom.xml properties could be read. For now is better to use the org.codehaus.mojo:properties-maven-plugin:1.0.0 and org.codehaus.mojo:buildnumber-maven-plugin:1.4
+VersionedAppMain info:
+   build-all=groupId=org.raisercostin, artifactId=uzene-versions-sample, version=0.1-SNAPSHOT, timestamp=2016-09-12T21-59-07-866-Z+0000, buildNumber=no-scm-configured
+   build-id=org.raisercostin:uzene-versions-sample
+   build-info=uzene-versions-sample-0.1-SNAPSHOT at 2016-09-12T21-59-07-866-Z+0000 Build#no-scm-configured
+   build-timestamp=2016-09-12T21-59-07-866-Z+0000
+   build-version=0.1-SNAPSHOT-2016-09-12T21-59-07-866-Z+0000-#no-scm-configured
+   buildNumber=no-scm-configured
+   maven.build.timestamp.format=yyyy-MM-dd'T'HH-mm-ss-SSS-'Z'Z
+   scmBranch=UNKNOWN_BRANCH
+   timestamp=1473717549223
+23:59:24.234 [main] INFO  org.uzene.util.AppInfo - searching information for class org.uzene.util.AppInfo defined in groupId=[org.raisercostin] artifactId=[uzene-versions]
+23:59:24.236 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/META-INF/maven/org.raisercostin/uzene-versions/pom-build.properties ...
+23:59:24.238 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/META-INF/maven/org.raisercostin/uzene-versions/pom.properties ...
+23:59:24.238 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/META-INF/maven/org.raisercostin/uzene-versions/pom.xml ...
+23:59:24.239 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/META-INF/MANIFEST.MF ...
+23:59:24.239 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/META-INF/MANIFEST.MF ... found stream class sun.net.www.protocol.jar.JarURLConnection$JarURLInputStream
+23:59:24.241 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/WEB-INF/MANIFEST.MF ...
+23:59:24.241 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/pom.xml ...
+23:59:24.241 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/../pom.xml ...
+23:59:24.241 [main] INFO  org.uzene.util.AppInfo - analysing jar:file:/Users/raiser/.m2/repository/org/uzene/uzene-versions/1.0/uzene-versions-1.0.jar!/../../pom.xml ...
+AppInfo info:
+   Archiver-Version=Plexus Archiver
+   Build-Jdk=1.8.0_60
+   Built-By=raiser
+   Created-By=Apache Maven 3.3.9
+   Implementation-Title=uzene-versions
+   Implementation-URL=https://github.com/raisercostin/uzene-versions
+   Implementation-Vendor-Id=org.uzene
+   Implementation-Version=1.0
+   Manifest-Version=1.0
+   Specification-Title=uzene-versions
+   Specification-Version=1.0
+   build-all=groupId=org.uzene, artifactId=uzene-versions, version=1.0, timestamp=2016-09-12T21-54-32-436-Z+0000, buildNumber=f881d954ec33e13033acd12a4e0442a2abaaf2d9
+   build-info=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
+   build-timestamp=2016-09-12T21-54-32-436-Z+0000
+   build-version=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
+```
 
 ## Other solutions
 See the following links to get some feeling of various methods to get this info.
