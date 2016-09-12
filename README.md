@@ -51,14 +51,14 @@ Notice the Implementation-URL and buildNumber=[f881d954ec33e13033acd12a4e0442a2a
 ## How it works
 Information about a class is searched in various locations relative to that class. For now only the information from first existing resource is used.
 The locations used are:
-- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom-build.properties		- uzene-versions convention
-- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom.properties   - maven convention
-- <classContainerOrFolder>/META-INF/maven/<groupId>/<artifactId>/pom.xml   - maven convention, for now cannot extract info from here
-- <classContainerOrFolder>/META-INF/MANIFEST.MF   - sun convention used in jars, wars and other packages
-- <classContainerOrFolder>/WEB-INF/MANIFEST.MF   - servlet convention used for wars
-- <classContainerOrFolder>/pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
-- <classContainerOrFolder>/../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
-- <classContainerOrFolder>/../../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+- \<classContainerOrFolder>/META-INF/maven/\<groupId>/\<artifactId>/pom-build.properties		- uzene-versions convention
+- \<classContainerOrFolder>/META-INF/maven/\<groupId>/\<artifactId>/pom.properties   - maven convention
+- \<classContainerOrFolder>/META-INF/maven/\<groupId>/\<artifactId>/pom.xml   - maven convention, for now cannot extract info from here
+- \<classContainerOrFolder>/META-INF/MANIFEST.MF   - sun convention used in jars, wars and other packages
+- \<classContainerOrFolder>/WEB-INF/MANIFEST.MF   - servlet convention used for wars
+- \<classContainerOrFolder>/pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+- \<classContainerOrFolder>/../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
+- \<classContainerOrFolder>/../../pom.xml   - useful in development mode when the compiled classes are not bundled yet in a jar
 
 Full output clarifies also the sources of information.
 ```
