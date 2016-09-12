@@ -19,15 +19,15 @@ You can get the info via ```AppInfo.readMetaInfo(aClass, optionalGroupId, option
 The output from sample app:
 ```
 VersionedAppMain info:
-   build-all=groupId=org.raisercostin, artifactId=uzene-versions-sample, version=0.1-SNAPSHOT, timestamp=2016-09-12T21-44-38-124-Z+0000, buildNumber=no-scm-configured
+   build-all=groupId=org.raisercostin, artifactId=uzene-versions-sample, version=0.1-SNAPSHOT, timestamp=2016-09-12T21-59-07-866-Z+0000, buildNumber=no-scm-configured
    build-id=org.raisercostin:uzene-versions-sample
-   build-info=uzene-versions-sample-0.1-SNAPSHOT at 2016-09-12T21-44-38-124-Z+0000 Build#no-scm-configured
-   build-timestamp=2016-09-12T21-44-38-124-Z+0000
-   build-version=0.1-SNAPSHOT-2016-09-12T21-44-38-124-Z+0000-#no-scm-configured
+   build-info=uzene-versions-sample-0.1-SNAPSHOT at 2016-09-12T21-59-07-866-Z+0000 Build#no-scm-configured
+   build-timestamp=2016-09-12T21-59-07-866-Z+0000
+   build-version=0.1-SNAPSHOT-2016-09-12T21-59-07-866-Z+0000-#no-scm-configured
    buildNumber=no-scm-configured
    maven.build.timestamp.format=yyyy-MM-dd'T'HH-mm-ss-SSS-'Z'Z
    scmBranch=UNKNOWN_BRANCH
-   timestamp=1473716679466
+   timestamp=1473717549223
 
 AppInfo info:
    Archiver-Version=Plexus Archiver
@@ -37,14 +37,14 @@ AppInfo info:
    Implementation-Title=uzene-versions
    Implementation-URL=https://github.com/raisercostin/uzene-versions
    Implementation-Vendor-Id=org.uzene
-   Implementation-Version=1.0-SNAPSHOT
+   Implementation-Version=1.0
    Manifest-Version=1.0
    Specification-Title=uzene-versions
-   Specification-Version=1.0-SNAPSHOT
-   build-all=groupId=org.uzene, artifactId=uzene-versions, version=1.0-SNAPSHOT, timestamp=2016-09-12T21-06-47-154-Z+0000, buildNumber=no-scm-configured
-   build-info=1.0-SNAPSHOT-2016-09-12T21-06-47-154-Z+0000-#no-scm-configured
-   build-timestamp=2016-09-12T21-06-47-154-Z+0000
-   build-version=1.0-SNAPSHOT-2016-09-12T21-06-47-154-Z+0000-#no-scm-configured
+   Specification-Version=1.0
+   build-all=groupId=org.uzene, artifactId=uzene-versions, version=1.0, timestamp=2016-09-12T21-54-32-436-Z+0000, buildNumber=f881d954ec33e13033acd12a4e0442a2abaaf2d9
+   build-info=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
+   build-timestamp=2016-09-12T21-54-32-436-Z+0000
+   build-version=1.0-2016-09-12T21-54-32-436-Z+0000-#f881d954ec33e13033acd12a4e0442a2abaaf2d9
 ```
 
 ## Other solutions
