@@ -57,8 +57,8 @@ Add dependency on AppInfo class. The lib is hosted in JCenter
 		<version>1.0</version>
 	</dependency>
 
-Configure inyour pom.xml
-- ```properties-maven-plugin``` and <properties> to add to artifact the properties ```${project.build.outputDirectory}/META-INF/maven/${groupId}/${artifactId}/pom-build.properties```.
+Configure in your pom.xml
+- ```properties-maven-plugin``` and \<properties> section to add to jar the following properties file ```${project.build.outputDirectory}/META-INF/maven/${groupId}/${artifactId}/pom-build.properties```.
 - ```buildnumber-maven-plugin``` to set the ${buildNumber} from scm(git,svn) revision. You need to have the <scm> section configured for this plugin.
 - ```maven-jar-plugin``` to add properties to MANIFEST.MF .
 
