@@ -12,5 +12,11 @@ public class VersionedAppMain {
 		for (Entry<String, String> entry : info.entrySet()) {
 			System.out.println("   "+entry);
 		}
+		Map<String, String> appInfoInfo = AppInfo.readMetaInfo(AppInfo.class, "org.raisercostin",
+				"uzene-versions");
+		System.out.println("AppInfo info:");
+		for (Entry<String, String> entry : appInfoInfo.entrySet()) {
+			System.out.println("   "+entry);
+		}
 	}
 }
