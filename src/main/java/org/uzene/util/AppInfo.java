@@ -1,20 +1,17 @@
 package org.uzene.util;
 
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.apache.commons.lang3.text.StrSubstitutor;
-import com.jasongoodwin.monads.Try;
 
 /**
  * Reads meta information about the code using various methods. The final result is a Map<String,String> with all the
@@ -44,9 +41,10 @@ public class AppInfo {
 		return readMetaInfo(clazz, "", "");
 	}
 	public static Map<String, String> readMetaInfo(Class<?> clazz, String groupId, String artifactId) {
-		logger.info("searching information for {} defined in groupId=[{}] artifactId=[{}]",clazz,groupId,artifactId);
-		Stream<URL> urls = metaInfoLocations(clazz, groupId, artifactId);
-		Stream<Try<Map<String, String>>> all2 = urls.map(url -> Try.ofFailable(() -> {
+		logger.info("searching information for {} defined in groupId=[{}] artifactId=[{}]", clazz, groupId, artifactId);
+		List<URL> urls = metaInfoLocations(clazz, groupId, artifactId);
+		Map<String, Throwable> errors = new TreeMap<>();
+		for (URL url : urls) {
 			logger.info("analysing " + url + " ...");
 			try (InputStream stream = url.openStream()) {
 				logger.info("analysing " + url + " ... found stream " + stream.getClass());
@@ -56,69 +54,38 @@ public class AppInfo {
 					// Attributes attr = manifest.getEntries().entrySet().stream().flatMap(x->x.getValue().);
 					// TODO read all attributes
 					Attributes attr = manifest.getMainAttributes();
-					attr.forEach((x, y) -> res.put(x.toString(), y.toString()));
+					addEntries(res, attr.entrySet());
 				} else if (url.getPath().endsWith(".properties")) {
 					Properties p = new Properties();
 					p.load(stream);
-					p.forEach((x, y) -> res.put(x.toString(), y.toString()));
+					addEntries(res, p.entrySet());
 				} else if (url.getPath().endsWith("pom.xml")) {
 					logger.debug("In the future pom.xml properties could be read. "
 							+ "For now is better to use the org.codehaus.mojo:properties-maven-plugin:1.0.0"
 							+ " and org.codehaus.mojo:buildnumber-maven-plugin:1.4");
 				}
-				// System.out.println("properties="
-				// + res.entrySet().stream().map(x -> x.getKey() + "=" +
-				// x.getValue()).collect(Collectors.joining("\n")));
 				return res;
+			} catch (Throwable e) {
+				errors.put(url.toExternalForm(), e);
 			}
-		}));
-		List<Try<Map<String, String>>> all = all2.collect(Collectors.toList());
-		Map<String, String> result = all.stream().filter(x -> x.isSuccess()).map(x -> x.getUnchecked()).findFirst()// TODO
-																													// should
-																													// collect
-																													// all
-				.orElseThrow(() -> new RuntimeException("Couldn't find metaInfo. All errors are "
-						+ all.stream().map(x -> toString(getException(x))).collect(Collectors.joining("\n"))));
-		return resolveAllVariables(result);
-	}
-	private static Map<String, String> resolveAllVariables(Map<String, String> map) {
-		StrSubstitutor resolver = new StrSubstitutor(map);
-		Map<String, String> result = new TreeMap<>();
-		map.entrySet().stream().forEach(x -> {
-			if (x.getValue().contains("$"))
-				result.put(x.getKey(), resolver.replace(x.getValue()));
-			else
-				result.put(x.getKey(), x.getValue());
-		});
-		return result;
-	}
-	private static String toString(RuntimeException exception) {
-		StringWriter s = new StringWriter();
-		PrintWriter writer = new PrintWriter(s);
-		exception.printStackTrace(writer);
-		return s.getBuffer().toString();
-	}
-	private static RuntimeException getException(Try<?> x) {
-		RuntimeException exception = null;
-		try {
-			x.getUnchecked();
-		} catch (RuntimeException e) {
-			exception = e;
 		}
-		if (exception == null)
-			throw new Error("The try should contain an exception");
-		return exception;
+		throw new RuntimeException("Couldn't find metaInfo. All errors are " + errors);
 	}
-	private static Stream<URL> metaInfoLocations(Class<?> clazz, String groupId, String artifactId) {
+	private static void addEntries(TreeMap<String, String> res, Set<Entry<Object, Object>> entrySet) {
+		for (Entry<Object, Object> entry : entrySet) {
+			res.put(entry.getKey().toString(), entry.getValue().toString());
+		}
+	}
+	private static List<URL> metaInfoLocations(Class<?> clazz, String groupId, String artifactId) {
 		try {
-			return Stream.of(
+			return Arrays.asList(new URL[] {
 					new URL(javaResource(clazz,
 							"META-INF/maven/" + groupId + "/" + artifactId + "/pom-build.properties")),
 					new URL(javaResource(clazz, "META-INF/maven/" + groupId + "/" + artifactId + "/pom.properties")),
 					new URL(javaResource(clazz, "META-INF/maven/" + groupId + "/" + artifactId + "/pom.xml")),
 					new URL(javaResource(clazz, "META-INF/MANIFEST.MF")),
 					new URL(javaResource(clazz, "WEB-INF/MANIFEST.MF")), new URL(javaResource(clazz, "pom.xml")),
-					new URL(javaResource(clazz, "../pom.xml")), new URL(javaResource(clazz, "../../pom.xml")));
+					new URL(javaResource(clazz, "../pom.xml")), new URL(javaResource(clazz, "../../pom.xml")) });
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
@@ -129,7 +96,7 @@ public class AppInfo {
 	private static String findParent(Class<?> clazz) {
 		String resName = "/" + clazz.getName().replace(".", "/") + ".class";
 		String resLocation = clazz.getResource(resName).toExternalForm();
-		//System.out.println(resLocation);
+		// System.out.println(resLocation);
 		String parent = resLocation.substring(0, resLocation.length() - resName.length() + 1);
 		return parent;
 	}
